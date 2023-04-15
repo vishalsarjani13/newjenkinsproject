@@ -16,15 +16,15 @@ pipeline {
         }
         stage('Docker Image Build') {
             steps {
-                sh 'docker build -t application .'
+                sh 'docker build -t projectjenkins .'
             }
         }
         stage('Push Docker Image to ECR') {
             steps {
                 withAWS(credentials: 'aws-credentials', region: 'us-east-1') {
                     sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 150741279371.dkr.ecr.us-east-1.amazonaws.com'
-                    sh 'docker tag application:latest 150741279371.dkr.ecr.us-east-1.amazonaws.com/application:latest'
-                    sh 'docker push 150741279371.dkr.ecr.us-east-1.amazonaws.com/application:latest'
+                    sh 'docker tag application:latest 150741279371.dkr.ecr.us-east-1.amazonaws.com/projectjenkins:latest'
+                    sh 'docker push 150741279371.dkr.ecr.us-east-1.amazonaws.com/projectjenkins:latest'
                 }
             }
         }
